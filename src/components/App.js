@@ -10,7 +10,8 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState("");
+  const [isDelCardPopupOpen, setDelCardPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -28,11 +29,16 @@ function App() {
     setAddPlacePopupOpen(true);
   }
 
+  function handleDelCardClick() {
+    setDelCardPopupOpen(true);
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
-    setSelectedCard("");
+    setDelCardPopupOpen(false);
+    setSelectedCard(false);
   }
 
   return (
@@ -44,6 +50,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onCardClick={handleCardClick}
+        onDelCardIconClick={handleDelCardClick}
       />
 
       <Footer />
@@ -165,37 +172,24 @@ function App() {
         </fieldset>
       </PopupWithForm>
 
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
-      {/* 
-      Не удалил пока, ещё буду с этим работать
-      <section id="popup-del" className="popup">
-        <div className="popup__overlay" />
-        <div className="popup__content">
+      <PopupWithForm
+        isOpen={isDelCardPopupOpen}
+        name="popupDelForm"
+        title="Вы уверены?"
+        onClose={closeAllPopups}
+      >
+        <fieldset className="popup__fieldset">
           <button
-            className="popup__close btn-opacity btn-opacity_type_medium"
-            type="button"
-          />
-          <h2 className="popup__title popup__title_popup-del">Вы уверены?</h2>
-          <form
-            className="popup__form"
-            name="popupDelForm"
-            action="#"
-            method="POST"
+            className="popup__submit-btn btn-opacity btn-opacity_type_high popup__submit-btn_popup-del"
+            tabIndex={18}
+            type="submit"
           >
-            <fieldset className="popup__fieldset">
-              <button
-                className="popup__submit-btn btn-opacity btn-opacity_type_high popup__submit-btn_popup-del"
-                tabIndex={18}
-                type="submit"
-              >
-                Да
-              </button>
-            </fieldset>
-          </form>
-        </div>
-      </section>
-     */}
+            Да
+          </button>
+        </fieldset>
+      </PopupWithForm>
+
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </>
   );
 }

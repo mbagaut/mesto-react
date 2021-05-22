@@ -4,77 +4,81 @@ import { api } from "../utils/api";
 import Card from "./Card";
 
 function Main(props) {
+  const {
+    onEditAvatar,
+    onEditProfile,
+    onAddPlace,
+    onCardClick,
+    onDelCardIconClick,
+  } = props;
+
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setСards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getUserInfo().then((data) => {
-      setUserAvatar(data.avatar);
-      setUserDescription(data.about);
-      setUserName(data.name);
-    });
-  }, []);
-
-  React.useEffect(() => {
-    api.getCards().then((arr) => {
-      setСards(arr);
-    });
+    Promise.all([api.getUserInfo(), api.getCards()])
+      .then((data) => {
+        setUserAvatar(data[0].avatar);
+        setUserDescription(data[0].about);
+        setUserName(data[0].name);
+        setСards(data[1]);
+      })
+      .catch((err) => console.log(`АЛЯРМ!: ${err}`));
   }, []);
 
   return (
-    <>
-      <main className="main page__main">
-        <section className="person main__person">
-          <div className="person__header">
-            <div className="person__avatar">
-              <img
-                className="person__photo"
-                src={beketov}
-                style={{ backgroundImage: `url(${userAvatar})` }}
-                alt="П. И. Бекетов"
-              />
-              <button
-                onClick={props.onEditAvatar}
-                id="popup-avatar-but"
-                className="person__photo-btn"
-              />
-            </div>
-            <div className="person__container">
-              <div className="person__string">
-                <h1 className="person__title">{userName}</h1>
-                <button
-                  onClick={props.onEditProfile}
-                  id="popup-redact-but"
-                  className="person__icon-edit btn-opacity btn-opacity_type_medium"
-                  type="button"
-                />
-              </div>
-              <p className="person__job">{userDescription}</p>
-            </div>
+    <main className="main page__main">
+      <section className="person main__person">
+        <div className="person__header">
+          <div className="person__avatar">
+            <img
+              className="person__photo"
+              src={beketov}
+              style={{ backgroundImage: `url(${userAvatar})` }}
+              alt="П. И. Бекетов"
+            />
             <button
-              onClick={props.onAddPlace}
-              id="popup-add-but"
-              className="person__button btn-opacity btn-opacity_type_medium"
-              type="button"
+              onClick={onEditAvatar}
+              id="popup-avatar-but"
+              className="person__photo-btn"
             />
           </div>
-        </section>
-
-        <section className="main__grid">
-          <ul id="photos" className="photos">
-            {cards.map((card) => (
-              <Card
-                key={card._id}
-                card={card}
-                onCardClick={props.onCardClick}
+          <div className="person__container">
+            <div className="person__string">
+              <h1 className="person__title">{userName}</h1>
+              <button
+                onClick={onEditProfile}
+                id="popup-redact-but"
+                className="person__icon-edit btn-opacity btn-opacity_type_medium"
+                type="button"
               />
-            ))}
-          </ul>
-        </section>
-      </main>
-    </>
+            </div>
+            <p className="person__job">{userDescription}</p>
+          </div>
+          <button
+            onClick={onAddPlace}
+            id="popup-add-but"
+            className="person__button btn-opacity btn-opacity_type_medium"
+            type="button"
+          />
+        </div>
+      </section>
+
+      <section className="main__grid">
+        <ul id="photos" className="photos">
+          {cards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
+              onDelCardIconClick={onDelCardIconClick}
+            />
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }
 
