@@ -15,15 +15,15 @@ function Main(props) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setСards] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
-      .then((data) => {
-        setUserAvatar(data[0].avatar);
-        setUserDescription(data[0].about);
-        setUserName(data[0].name);
-        setСards(data[1]);
+      .then(([userData, cardsData]) => {
+        setUserAvatar(userData.avatar);
+        setUserDescription(userData.about);
+        setUserName(userData.name);
+        setCards(cardsData);
       })
       .catch((err) => console.log(`АЛЯРМ!: ${err}`));
   }, []);

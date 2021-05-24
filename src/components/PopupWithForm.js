@@ -3,7 +3,9 @@ import React from "react";
 function PopupWithForm(props) {
   const { name, isOpen, onClose, title, children } = props;
   return (
-    <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
+    <section
+      className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
+    >
       <div className="popup__overlay" onClick={onClose} />
       <div className="popup__content">
         <button

@@ -11,7 +11,7 @@ function App() {
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isDelCardPopupOpen, setDelCardPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({});
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -38,7 +38,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setDelCardPopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard({});
   }
 
   return (

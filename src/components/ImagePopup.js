@@ -5,7 +5,9 @@ function ImagePopup(props) {
   return (
     <section
       id="popup-img"
-      className={`popup popup_img-only ${card && "popup_opened"}`}
+      className={`popup popup_img-only ${
+        Object.keys(card).length > 0 ? "popup_opened" : ""
+      }`}
     >
       <div className="popup__overlay" onClick={onClose} />
       <div className="popup__content popup__content_img-only">
@@ -15,7 +17,7 @@ function ImagePopup(props) {
           type="button"
         />
         <h2 className="popup__title popup__title_img-only">{card.name}</h2>
-        <img className="popup__image" src={card && `${card.link}`} alt="#" />
+        <img className="popup__image" src={card.link} alt={card.name} />
       </div>
     </section>
   );
