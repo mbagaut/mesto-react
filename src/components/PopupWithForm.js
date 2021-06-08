@@ -1,7 +1,7 @@
 import React from "react";
 
 function PopupWithForm(props) {
-  const { name, isOpen, onClose, title, children } = props;
+  const { name, isOpen, onClose, title, children, onSubmit } = props;
   return (
     <section
       className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
@@ -14,7 +14,13 @@ function PopupWithForm(props) {
           type="button"
         />
         <h2 className="popup__title">{title}</h2>
-        <form className="popup__form" name={name} action="#" method="POST">
+        <form
+          className="popup__form"
+          name={name}
+          action="#"
+          method="POST"
+          onSubmit={onSubmit}
+        >
           <fieldset className="popup__fieldset">{children}</fieldset>
         </form>
       </div>

@@ -1,5 +1,5 @@
 .photos__like-counter {
-  display: block;
+  display: none;
   color: black;
   font-size: 13px;
   line-height: 10px;

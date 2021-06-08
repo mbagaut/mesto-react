@@ -1,7 +1,6 @@
 import React from "react";
-import beketov from "../images/beketov.jpeg";
-import { api } from "../utils/api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const {
@@ -9,24 +8,12 @@ function Main(props) {
     onEditProfile,
     onAddPlace,
     onCardClick,
-    onDelCardIconClick,
+    onCardDelIconClick,
+    cards,
+    onCardLike,
   } = props;
 
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getCards()])
-      .then(([userData, cardsData]) => {
-        setUserAvatar(userData.avatar);
-        setUserDescription(userData.about);
-        setUserName(userData.name);
-        setCards(cardsData);
-      })
-      .catch((err) => console.log(`АЛЯРМ!: ${err}`));
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="main page__main">
@@ -35,8 +22,7 @@ function Main(props) {
           <div className="person__avatar">
             <img
               className="person__photo"
-              src={beketov}
-              style={{ backgroundImage: `url(${userAvatar})` }}
+              src={`${currentUser.avatar}`}
               alt="П. И. Бекетов"
             />
             <button
@@ -47,7 +33,7 @@ function Main(props) {
           </div>
           <div className="person__container">
             <div className="person__string">
-              <h1 className="person__title">{userName}</h1>
+              <h1 className="person__title">{currentUser.name}</h1>
               <button
                 onClick={onEditProfile}
                 id="popup-redact-but"
@@ -55,7 +41,7 @@ function Main(props) {
                 type="button"
               />
             </div>
-            <p className="person__job">{userDescription}</p>
+            <p className="person__job">{currentUser.about}</p>
           </div>
           <button
             onClick={onAddPlace}
@@ -73,7 +59,8 @@ function Main(props) {
               key={card._id}
               card={card}
               onCardClick={onCardClick}
-              onDelCardIconClick={onDelCardIconClick}
+              onCardDelIconClick={onCardDelIconClick}
+              onCardLike={onCardLike}
             />
           ))}
         </ul>

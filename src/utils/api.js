@@ -11,7 +11,7 @@ class Api {
     );
   }
 
-  getCards() {
+  getCardList() {
     return this._sendRequest(`cards`, {
       method: "GET",
       headers: this._headers,
@@ -55,6 +55,20 @@ class Api {
         avatar: avatarLink,
       }),
     });
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this._sendRequest(`cards/likes/${id}`, {
+        method: "PUT",
+        headers: this._headers,
+      });
+    } else {
+      return this._sendRequest(`cards/likes/${id}`, {
+        method: "DELETE",
+        headers: this._headers,
+      });
+    }
   }
 
   putLike(id) {
