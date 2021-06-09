@@ -3,7 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup(props) {
-  const { isOpen, onClose, onUpdateUser } = props;
+  const { isOpen, onClose, onUpdateUser, buttonText } = props;
   const currentUser = React.useContext(CurrentUserContext);
 
   const [name, setName] = React.useState("");
@@ -12,7 +12,7 @@ function EditProfilePopup(props) {
   React.useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -38,6 +38,8 @@ function EditProfilePopup(props) {
       title="Редактировать профиль"
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText={buttonText}
+      defaultButtonText={"Сохранить"}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__field">
@@ -48,7 +50,7 @@ function EditProfilePopup(props) {
             type="text"
             name="name"
             onChange={handleChangeName}
-            value={name}
+            value={name || ""}
             placeholder="Жак-Ив Кусто"
             required
             minLength={2}
@@ -64,7 +66,7 @@ function EditProfilePopup(props) {
             type="text"
             name="about"
             onChange={handleChangeDescription}
-            value={description}
+            value={description || ""}
             placeholder="Исследователь океана"
             required
             minLength={2}
@@ -72,13 +74,6 @@ function EditProfilePopup(props) {
           />
           <span className="job-input-error" />
         </label>
-        <button
-          className="popup__submit-btn btn-opacity btn-opacity_type_high"
-          tabIndex={18}
-          type="submit"
-        >
-          Сохранить
-        </button>
       </fieldset>
     </PopupWithForm>
   );

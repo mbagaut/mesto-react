@@ -25,7 +25,7 @@ function Card(props) {
         <img
           className="photos__image"
           alt={card.name}
-          style={{ backgroundImage: `url(${card.link})` }}
+          src={card.link}
           onClick={handleClick}
         />
         <button

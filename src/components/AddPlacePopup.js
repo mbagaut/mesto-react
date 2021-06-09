@@ -2,7 +2,7 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
-  const { isOpen, onClose, onAddPlace } = props;
+  const { isOpen, onClose, onAddPlace, buttonText } = props;
   const [cardName, setCardName] = React.useState("");
   const [cardLink, setCardLink] = React.useState("");
 
@@ -35,6 +35,8 @@ function AddPlacePopup(props) {
       title="Новое место"
       onClose={clearInputValue}
       onSubmit={handleSubmit}
+      buttonText={buttonText}
+      defaultButtonText={"Создать"}
     >
       <fieldset className="popup__fieldset">
         <label className="popup__field">
@@ -67,13 +69,6 @@ function AddPlacePopup(props) {
           />
           <span className="link-input-error" />
         </label>
-        <button
-          className="popup__submit-btn btn-opacity btn-opacity_type_high"
-          tabIndex={18}
-          type="submit"
-        >
-          Создать
-        </button>
       </fieldset>
     </PopupWithForm>
   );

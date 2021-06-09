@@ -1,7 +1,17 @@
 import React from "react";
 
 function PopupWithForm(props) {
-  const { name, isOpen, onClose, title, children, onSubmit } = props;
+  const {
+    name,
+    isOpen,
+    onClose,
+    title,
+    children,
+    onSubmit,
+    buttonText,
+    defaultButtonText,
+  } = props;
+
   return (
     <section
       className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
@@ -22,6 +32,13 @@ function PopupWithForm(props) {
           onSubmit={onSubmit}
         >
           <fieldset className="popup__fieldset">{children}</fieldset>
+          <button
+            className="popup__submit-btn btn-opacity btn-opacity_type_high"
+            tabIndex={18}
+            type="submit"
+          >
+            {buttonText || defaultButtonText}
+          </button>
         </form>
       </div>
     </section>
