@@ -21,9 +21,20 @@ _[Проект](https://mbagaut.github.io/mesto-react/) выполнен в ра
 - **Fetch API**
 - **React**
 
-## В разработке
+## Установка зависимостей
 
-- **Портировать проект на React**
+Установить зависимости проекта
+```sh
+npm i
+```
+Запуск на http://localhost:3000/
+```sh
+npm run start
+```
+Сборка проекта
+```sh
+npm run build
+```
 
 ## Автор
 
